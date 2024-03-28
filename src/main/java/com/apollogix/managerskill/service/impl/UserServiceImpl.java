@@ -96,19 +96,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> upRole(Integer id) throws BusinessException {
         MUser user = checkExistUserById(id);
-        Optional<MUser> mUser = userRepository.findById(id);
-        if(mUser.isPresent()){
-            if (!ObjectUtils.isEmpty(request.getPassword())){
-                mUser.get().setPassword(new BCryptPasswordEncoder().encode(request.getPassword()));
-            }
-            if (!ObjectUtils.isEmpty(request.getName())){
-                mUser.get().setName(request.getName());
-            }
-            userRepository.save(mUser.get());
-            return ResponseEntity.ok().build();
-        } else {
-            throw new BusinessException(messageService.getMessages(MSG_VALIDATE_USER_DO_NOT_EXIST));
-        }
+        user.setRole(Role.ROLE_TEACHER.getI());
+        userRepository.save(user);
+        return ResponseEntity.ok().build();
     }
 
     /**
@@ -120,7 +110,7 @@ public class UserServiceImpl implements UserService {
      */
     private MUser checkExistUserById(Integer id) throws BusinessException {
         Optional<MUser> mUser = userRepository.findById(id);
-        if(!mUser.isPresent()){
+        if(mUser.isEmpty()){
             throw new BusinessException(messageService.getMessages(MSG_VALIDATE_USER_DO_NOT_EXIST));
         } else {
             return mUser.get();
