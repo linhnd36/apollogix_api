@@ -12,4 +12,12 @@ public interface UserRepository extends JpaRepository<MUser, Integer> {
      * @return the user with the specified email, or null if not found
      */
     MUser findByEmail(String email);
+
+    /**
+     * Checks if a user with the specified email exists.
+     *
+     * @param email the email to check
+     * @return true if a user with the specified email exists, false otherwise
+     */
+    Boolean existsByEmail(String email);
 }

@@ -32,7 +32,7 @@ public class MUser {
     private String password;
 
     @Column(nullable = false)
-    private String role;
+    private Integer role;
 
     @Column(name = "is_active")
     private Boolean isActive = false;
