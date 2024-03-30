@@ -8,6 +8,9 @@ public class MessageLabel {
     // Messages validate
     public static final String MSG_VALIDATE_USER_DO_NOT_EXIST = "msg.validate.user_do_not_exist";
     public static final String MSG_VALIDATE_EMAIL_ALREADY_EXIST = "msg.validate.email_already_exist";
+    public static final String MSG_VALIDATE_EXAM_DO_NOT_EXIST = "msg.validate.exam_do_not_exist";
+    public static final String MSG_VALIDATE_EXAM_ALREADY_DELETE = "msg.validate.exam_already_delete";
+
 
     // Messages authentication
     public static final String MSG_AUTHENTICATION_IN_CORRECT_EMAIL_OR_PASSWORD = "msg.authentication.in_correct_email_or_password";

@@ -53,4 +53,16 @@ public class CustomExceptionHandler {
         return buildResponseEntity(new ErrorResponse(HttpStatus.FORBIDDEN, e.getMessage()));
     }
 
+    /**
+     * Handles Another Exception and generates an appropriate response entity.
+     *
+     * @param e The Exception to handle
+     * @return The ResponseEntity containing the error response with status code 500
+     */
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<?> handleException(Exception e) {
+        logger.error(e.getMessage(), e);
+        return buildResponseEntity(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.apollogix.managerskill.service;
 
+import com.apollogix.managerskill.entity.MUser;
 import com.apollogix.managerskill.exception.BusinessException;
 import com.apollogix.managerskill.request.LoginRequest;
 import com.apollogix.managerskill.request.UserRegisterRequest;
@@ -53,4 +54,10 @@ public interface UserService {
      * @return ResponseEntity
      */
     ResponseEntity<?> upRole(Integer id) throws BusinessException;
+
+    /**
+     * Get Current user call API
+     * @return MUser
+     */
+    MUser getCurrentUser();
 }

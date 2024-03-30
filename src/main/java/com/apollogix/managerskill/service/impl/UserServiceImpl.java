@@ -11,12 +11,12 @@ import com.apollogix.managerskill.response.LoginResponse;
 import com.apollogix.managerskill.security.JwtUtil;
 import com.apollogix.managerskill.service.MessageService;
 import com.apollogix.managerskill.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -27,6 +27,7 @@ import java.util.Optional;
 import static com.apollogix.managerskill.constants.MessageLabel.*;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -99,6 +100,17 @@ public class UserServiceImpl implements UserService {
         user.setRole(Role.ROLE_TEACHER.getI());
         userRepository.save(user);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public MUser getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String email = authentication.getName();
+            return userRepository.findByEmail(email);
+        } else {
+            return null;
+        }
     }
 
     /**

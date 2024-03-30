@@ -35,7 +35,7 @@ public class UserController {
      * @return a ResponseEntity object with the result of the register operation
      * @throws BusinessException if email already exists in Database
      */
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<?> login(@RequestBody UserRegisterRequest request) throws BusinessException {
         return new ResponseEntity<>(userService.register(request), HttpStatus.CREATED);
     }
@@ -59,7 +59,7 @@ public class UserController {
      * @return ResponseEntity
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
+    public ResponseEntity<?> delete(@PathVariable Integer id) throws BusinessException {
         return userService.delete(id);
     }
 

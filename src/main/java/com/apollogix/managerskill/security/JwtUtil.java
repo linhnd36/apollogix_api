@@ -20,7 +20,7 @@ public class JwtUtil {
 
     public static final String JWT_SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
-    private static final long JWT_EXPIRATION = 1000 * 60 * 30;
+    private static final long JWT_EXPIRATION = 1000 * 60 * 60 * 24;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -29,6 +29,7 @@ public class JwtUtil {
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
+
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
