@@ -3,9 +3,9 @@ package com.apollogix.managerskill.security;
 import com.apollogix.managerskill.constants.Role;
 import com.apollogix.managerskill.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -40,7 +40,8 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/login").permitAll()
-                        .requestMatchers("/user/**", "/exam**").hasAuthority(Role.ROLE_TEACHER.getRole())
+                        .requestMatchers("/user/**").hasAuthority(Role.ROLE_TEACHER.getRole())
+//                        .requestMatchers( HttpMethod.POST,"/exam/**").hasAuthority(Role.ROLE_TEACHER.getRole())
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/**").permitAll()
                         .anyRequest().authenticated()
                 )

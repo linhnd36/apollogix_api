@@ -1,5 +1,6 @@
 package com.apollogix.managerskill.service.impl;
 
+import com.apollogix.managerskill.constants.Constants;
 import com.apollogix.managerskill.constants.Role;
 import com.apollogix.managerskill.entity.MUser;
 import com.apollogix.managerskill.exception.BusinessException;
@@ -53,9 +54,16 @@ public class UserServiceImpl implements UserService {
             throw new BadCredentialsException(messageService.getMessages(MSG_AUTHENTICATION_ACCOUNT_IN_ACTIVE));
         }
         MUser user = userRepository.findByEmail(request.getEmail());
+        String role = Constants.BLANK;
+        if (Role.ROLE_TEACHER.getI() == user.getRole()){
+            role = Role.ROLE_TEACHER.getRole();
+        } else if (Role.ROLE_STUDENT.getI() == user.getRole()) {
+            role = Role.ROLE_STUDENT.getRole();
+        }
         return LoginResponse.builder()
                 .accessToken(jwtUtil.generateToken(user.getEmail()))
                 .name(user.getName())
+                .role(role)
                 .build();
     }
 

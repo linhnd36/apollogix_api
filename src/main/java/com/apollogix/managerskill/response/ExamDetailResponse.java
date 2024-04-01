@@ -5,16 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class ExamResponse {
+public class ExamDetailResponse extends ExamResponse {
 
-    private Integer id;
-
-    private String name;
-
-    private String description;
-
+    private List<QuestionResponse> lstQuestions;
 }

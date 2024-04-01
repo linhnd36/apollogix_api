@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -36,6 +37,9 @@ public class MUser {
 
     @Column(name = "is_active")
     private Boolean isActive = false;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserEnrollExam> enrollExams;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

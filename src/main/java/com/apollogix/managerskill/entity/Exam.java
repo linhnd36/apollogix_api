@@ -3,7 +3,10 @@ package com.apollogix.managerskill.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -45,7 +48,7 @@ public class Exam {
     @JoinColumn(name = "create_by", nullable = false)
     private MUser createBy;
 
-    @OneToMany(mappedBy="exam")
+    @OneToMany(mappedBy = "exam")
     private List<Question> questions;
 
     @NotNull

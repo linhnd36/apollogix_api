@@ -36,7 +36,7 @@ public class UserController {
      * @throws BusinessException if email already exists in Database
      */
     @PostMapping()
-    public ResponseEntity<?> login(@RequestBody UserRegisterRequest request) throws BusinessException {
+    public ResponseEntity<?> register(@RequestBody UserRegisterRequest request) throws BusinessException {
         return new ResponseEntity<>(userService.register(request), HttpStatus.CREATED);
     }
 
@@ -69,7 +69,7 @@ public class UserController {
      * @param id user need update
      * @return ResponseEntity
      */
-    @DeleteMapping("/up-role/{id}")
+    @PutMapping("/up-role/{id}")
     public ResponseEntity<?> UpRole(@PathVariable Integer id) throws BusinessException {
         return userService.upRole(id);
     }
