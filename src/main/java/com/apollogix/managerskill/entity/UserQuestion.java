@@ -2,8 +2,10 @@ package com.apollogix.managerskill.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
@@ -12,8 +14,8 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "t_user_enroll_exam")
-public class UserEnrollExam {
+@Table(name = "t_user_question")
+public class UserQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -21,16 +23,18 @@ public class UserEnrollExam {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private MUser user;
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
+
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "answer_ids", nullable = false)
+    private String answerIds;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "exam_id", nullable = false)
-    private Exam exam;
-
-    @Column(name = "result")
-    private String result;
+    @JoinColumn(name = "user_enroll_exam_id", nullable = false)
+    private UserEnrollExam userEnrollExam;
 
     @CreationTimestamp
     @Column(name = "create_at", nullable = false)

@@ -55,9 +55,9 @@ public class UserServiceImpl implements UserService {
         }
         MUser user = userRepository.findByEmail(request.getEmail());
         String role = Constants.BLANK;
-        if (Role.ROLE_TEACHER.getI() == user.getRole()){
+        if (Objects.equals(Role.ROLE_TEACHER.getI(), user.getRole())){
             role = Role.ROLE_TEACHER.getRole();
-        } else if (Role.ROLE_STUDENT.getI() == user.getRole()) {
+        } else if (Objects.equals(Role.ROLE_STUDENT.getI(), user.getRole())) {
             role = Role.ROLE_STUDENT.getRole();
         }
         return LoginResponse.builder()

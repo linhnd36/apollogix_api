@@ -11,6 +11,9 @@ public class MessageLabel {
     public static final String MSG_VALIDATE_EXAM_DO_NOT_EXIST = "msg.validate.exam_do_not_exist";
     public static final String MSG_VALIDATE_EXAM_ALREADY_DELETE = "msg.validate.exam_already_delete";
     public static final String MSG_VALIDATE_SORT_DIRECTION_INVALID = "msg.validate.sort_direction_invalid";
+    public static final String MSG_VALIDATE_QUESTION_DO_NOT_EXIST = "msg.validate.question_do_not_exist";
+    public static final String MSG_VALIDATE_ANSWER_DO_NOT_EXIST = "msg.validate.answer_do_not_exist";
+
 
 
 

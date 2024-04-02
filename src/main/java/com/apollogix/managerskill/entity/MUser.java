@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -44,12 +45,12 @@ public class MUser {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at")
-    private Date createdAt;
+    private Instant createdAt;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_at")
-    private Date updatedAt;
+    private Instant updatedAt;
 
 }
 

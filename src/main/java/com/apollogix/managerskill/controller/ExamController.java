@@ -75,8 +75,17 @@ public class ExamController {
      */
     @PostMapping("/take-exam")
     public ResponseEntity<?> takeExam(@RequestBody UserTakeExamRequest request) throws BusinessException {
-        return examService.takeExam(request);
+        return new ResponseEntity<>(examService.takeExam(request), HttpStatus.OK);
     }
 
+    /**
+     * API For Student/Teacher get history exam
+     *
+     * @return ResponseEntity with ExamHistoryResponse
+     */
+    @GetMapping("/get-history")
+    public ResponseEntity<?> getHistory() {
+        return new ResponseEntity<>(examService.getHistory(), HttpStatus.OK);
+    }
 
 }

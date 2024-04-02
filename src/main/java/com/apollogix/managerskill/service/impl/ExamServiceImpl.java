@@ -1,21 +1,16 @@
 package com.apollogix.managerskill.service.impl;
 
-import com.apollogix.managerskill.entity.Answer;
-import com.apollogix.managerskill.entity.Exam;
-import com.apollogix.managerskill.entity.Question;
-import com.apollogix.managerskill.entity.UserEnrollExam;
+import com.apollogix.managerskill.Util.DateTimeUtil;
+import com.apollogix.managerskill.constants.Role;
+import com.apollogix.managerskill.entity.*;
 import com.apollogix.managerskill.exception.BusinessException;
 import com.apollogix.managerskill.mapper.AnswerMapper;
 import com.apollogix.managerskill.mapper.ExamMapper;
 import com.apollogix.managerskill.mapper.QuestionMapper;
-import com.apollogix.managerskill.repository.AnswerRepository;
-import com.apollogix.managerskill.repository.ExamRepository;
-import com.apollogix.managerskill.repository.QuestionRepository;
-import com.apollogix.managerskill.repository.UserEnrollExamRepository;
+import com.apollogix.managerskill.mapper.UserMapper;
+import com.apollogix.managerskill.repository.*;
 import com.apollogix.managerskill.request.*;
-import com.apollogix.managerskill.response.ExamDetailResponse;
-import com.apollogix.managerskill.response.PaginationSortResponse;
-import com.apollogix.managerskill.response.QuestionResponse;
+import com.apollogix.managerskill.response.*;
 import com.apollogix.managerskill.service.ExamService;
 import com.apollogix.managerskill.service.MessageService;
 import com.apollogix.managerskill.service.UserService;
@@ -34,8 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.apollogix.managerskill.constants.Constants.ASC;
-import static com.apollogix.managerskill.constants.Constants.DESC;
+import static com.apollogix.managerskill.constants.Constants.*;
 import static com.apollogix.managerskill.constants.MessageLabel.*;
 
 
@@ -60,6 +54,9 @@ public class ExamServiceImpl implements ExamService {
 
     @Autowired
     private UserEnrollExamRepository userEnrollExamRepository;
+
+    @Autowired
+    private UserQuestionRepository userQuestionRepository;
 
     @Override
     public Integer create(CreateExamRequest request) {
@@ -150,16 +147,71 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public ResponseEntity<?> takeExam(UserTakeExamRequest request) throws BusinessException {
+    public String takeExam(UserTakeExamRequest request) throws BusinessException {
         Exam exam = checkExistExamById(request.getExamId());
         UserEnrollExam userEnrollExam = UserEnrollExam.builder()
                 .user(userService.getCurrentUser())
                 .exam(exam).build();
-        userEnrollExamRepository.save(userEnrollExam);
-        for (Map.Entry<Integer, List<Integer>> entry : request.getQuestionWithAnswer().entrySet()){
 
+        List<UserQuestion> userQuestions = new ArrayList<>();
+        int numberCorrectQuestion = 0;
+        for (Map.Entry<Integer, List<Integer>> entry : request.getQuestionWithAnswer().entrySet()){
+            Optional<Question> question =  questionRepository.findById(entry.getKey());
+            if (question.isEmpty()){
+                throw new BusinessException(messageService.getMessages(MSG_VALIDATE_QUESTION_DO_NOT_EXIST));
+            }
+            List<Integer> answerIdUserChoice = entry.getValue();
+            List<Answer> answerList = answerRepository.getAnswerByListId(answerIdUserChoice);
+            if (answerIdUserChoice.size() != answerList.size()){
+                throw new BusinessException(messageService.getMessages(MSG_VALIDATE_ANSWER_DO_NOT_EXIST));
+            }
+
+            userQuestions.add(
+                    UserQuestion.builder()
+                    .question(question.get())
+                    .answerIds(answerIdUserChoice.toString().replace(SQUARE_BRACKETS_LEFT, BLANK).replace(SQUARE_BRACKETS_RIGHT, BLANK))
+                    .userEnrollExam(userEnrollExam)
+                    .build());
+
+            // Check the correct answer for question
+            List<Integer> answerIdCorrectList =
+                    answerList.stream().filter(Answer::getIsCorrect).toList()
+                            .stream()
+                            .map(Answer::getId).toList();
+            answerIdUserChoice.removeAll(answerIdCorrectList);
+            if (answerIdUserChoice.isEmpty()){
+                numberCorrectQuestion = numberCorrectQuestion + 1;
+            }
         }
-        return null;
+        String result = numberCorrectQuestion + SLASH + exam.getQuestions().size();
+        userEnrollExam.setResult(result);
+        userEnrollExamRepository.save(userEnrollExam);
+        userQuestionRepository.saveAll(userQuestions);
+        return result;
+    }
+
+    @Override
+    public List<ExamHistoryResponse> getHistory() {
+        MUser user = userService.getCurrentUser();
+        List<UserEnrollExam> userEnrollExams = new ArrayList<>();
+        if (user.getRole().equals(Role.ROLE_TEACHER.getI())){
+            userEnrollExams = userEnrollExamRepository.findAll();
+        }
+        if (user.getRole().equals(Role.ROLE_STUDENT.getI())){
+            userEnrollExams = userEnrollExamRepository.findByUserId(user.getId());
+        }
+
+        List<ExamHistoryResponse> responses = new ArrayList<>();
+        for (UserEnrollExam u : userEnrollExams) {
+            responses.add(ExamHistoryResponse.builder()
+                    .id(u.getId())
+                    .exam(ExamMapper.INSTANCE.toResponse(u.getExam()))
+                    .user(UserMapper.INSTANCE.toResponse(u.getUser()))
+                    .result(u.getResult())
+                    .createDate(DateTimeUtil.formatInstant(u.getCreateAt()))
+                    .build());
+        }
+        return responses;
     }
 
     /**

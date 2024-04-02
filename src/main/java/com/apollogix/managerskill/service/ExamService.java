@@ -5,8 +5,11 @@ import com.apollogix.managerskill.request.CreateExamRequest;
 import com.apollogix.managerskill.request.SearchExamRequest;
 import com.apollogix.managerskill.request.UserTakeExamRequest;
 import com.apollogix.managerskill.response.ExamDetailResponse;
+import com.apollogix.managerskill.response.ExamHistoryResponse;
 import com.apollogix.managerskill.response.PaginationSortResponse;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface ExamService {
 
@@ -45,8 +48,15 @@ public interface ExamService {
 
     /**
      * User take Exam
+     *
      * @param request UserTakeExamRequest
      * @return scope user have
      */
-    ResponseEntity<?> takeExam(UserTakeExamRequest request) throws BusinessException;
+    String takeExam(UserTakeExamRequest request) throws BusinessException;
+
+    /**
+     * Get list History
+     * @return List<ExamHistoryResponse>
+     */
+    List<ExamHistoryResponse> getHistory();
 }
