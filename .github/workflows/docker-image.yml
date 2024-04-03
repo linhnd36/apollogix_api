@@ -21,6 +21,14 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
+
+    - name: Install Maven
+      run: |
+        sudo apt update
+        sudo apt install -y maven
+
+    - name: Build Spring Boot application
+      run: mvn package -DskipTests=true
         
     - name: Login to GitLab registry
       uses: docker/login-action@v1
