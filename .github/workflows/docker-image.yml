@@ -1,17 +1,14 @@
-name: Docker Image CI
+name: Manager Skill CI/CD
 
-#on:
-#  push:
-#    branches: [ "main" ]
-#  pull_request:
-#    branches: [ "main" ]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -27,7 +24,7 @@ jobs:
         sudo apt update
         sudo apt install -y maven
 
-    - name: Build Spring Boot application
+    - name: Build file jar
       run: mvn package -DskipTests=true
         
     - name: Login to GitLab registry
@@ -43,3 +40,18 @@ jobs:
     - name: Push Docker image
       run: docker push registry.gitlab.com/linhndse130639/manager-skill
 
+  deploy:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: root
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            docker stop manager-skill || true
+            docker rm manager-skill || true
+            docker run -d -p 8080:8080 --name manager-skill registry.gitlab.com/linhndse130639/manager-skill
