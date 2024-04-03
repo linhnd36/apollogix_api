@@ -9,6 +9,4 @@ public class Constants {
     public static final String SQUARE_BRACKETS_RIGHT = "]";
     public static final String SLASH = "/";
 
-
-
 }
