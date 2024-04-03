@@ -1,0 +1,427 @@
+{
+	"info": {
+		"_postman_id": "44ab885f-f0ff-4c43-aa20-6da3a305fd55",
+		"name": "Apollogix_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30011449"
+	},
+	"item": [
+		{
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Create User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"student_02@example.com\",\r\n    \"password\":\"12345678\",\r\n    \"name\":\"Student 02\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZWFjaGVyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzExNjE5MjczLCJleHAiOjE3MTE2MjEwNzN9.DFZDXoDgaxdzZEBGeASxcMC61-WSvskVelxJhHlfDz4"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/user/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\":\"12345678\",\r\n    \"name\":\"Student 01\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/user/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Up Role User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/user/up-role/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"up-role",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Exam",
+					"item": [
+						{
+							"name": "Create Exam",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Java Quiz 03\",\r\n    \"description\": \"Java Quiz for Student JAVA_03\",\r\n    \"lstQuestion\": [\r\n        {\r\n            \"name\": \"What is a correct syntax to output \\\"Hello World\\\" in Java?\",\r\n            \"lstAnswer\": [\r\n                {\r\n                    \"name\": \"System.out.println(\\\"Hello World\\\")\",\r\n                    \"isCorrect\": true\r\n                },\r\n                {\r\n                    \"name\": \" print (\\\"Hello World\\\");\",\r\n                    \"isCorrect\": false\r\n                },\r\n                {\r\n                    \"name\": \" Console.WriteLine(\\\"Hello World\\\");\",\r\n                    \"isCorrect\": false\r\n                },\r\n                {\r\n                    \"name\": \" echo(\\\"Hello World\\\");\",\r\n                    \"isCorrect\": false\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"Java is short for \\\"JavaScript\\\".\",\r\n            \"lstAnswer\": [\r\n                {\r\n                    \"name\": \"True\",\r\n                    \"isCorrect\": true\r\n                },\r\n                {\r\n                    \"name\": \"False\",\r\n                    \"isCorrect\": false\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"How do you insert COMMENTS in Java code?\",\r\n            \"lstAnswer\": [\r\n                {\r\n                    \"name\": \" # This is a comment\",\r\n                    \"isCorrect\": false\r\n                },\r\n                {\r\n                    \"name\": \" // This is a comment\",\r\n                    \"isCorrect\": true\r\n                },\r\n                {\r\n                    \"name\": \"  /* This is a comment\",\r\n                    \"isCorrect\": false\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"Which data type is used to create a variable that should store text?\",\r\n            \"lstAnswer\": [\r\n                {\r\n                    \"name\": \"myString\",\r\n                    \"isCorrect\": false\r\n                },\r\n                {\r\n                    \"name\": \"String\",\r\n                    \"isCorrect\": true\r\n                },\r\n                {\r\n                    \"name\": \"string\",\r\n                    \"isCorrect\": false\r\n                },\r\n                {\r\n                    \"name\": \"Txt\",\r\n                    \"isCorrect\": false\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/exam",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"exam"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "Get List Exam",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"\",\r\n  \"page\": 0,\r\n  \"size\": 10,\r\n  \"sort\": {\r\n    \"id\": \"desc\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/exam",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"exam"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Detail Exam",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/exam/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"exam",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Student Take Exam",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"examId\": 1,\r\n  \"questionWithAnswer\": {\r\n    \"1\": [1],\r\n    \"2\": [6],\r\n    \"3\": [8],\r\n    \"4\": [12],\r\n    \"5\": [16]\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/exam/take-exam",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"exam",
+								"take-exam"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Student get History Exam",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/exam/get-history",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"exam",
+								"get-history"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    postman.setEnvironmentVariable(\"access_token\", responseBody.accessToken);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// Login with role Teacher\r\n{\r\n    \"email\":\"teacher@example.com\",\r\n    \"password\":\"12345678\"\r\n}\r\n\r\n// Login With Role Student01\r\n// {\r\n//     \"email\":\"student_01@example.com\",\r\n//     \"password\":\"12345678\"\r\n// }\r\n// Student02\r\n// {\r\n//     \"email\":\"student_02@example.com\",\r\n//     \"password\":\"12345678\"\r\n// }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/user/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://localhost"
+		},
+		{
+			"key": "host",
+			"value": "http://95.111.192.11:8080"
+		}
+	]
+}
