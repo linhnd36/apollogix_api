@@ -10,17 +10,11 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Debug SSH Connection
-        run: ssh -vvv ${{ secrets.USERNAME }}@${{ secrets.HOST }}
-
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          username: root
+          key: ${{ secrets.KEY }}
+          port: 22
           script: whoami
